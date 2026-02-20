@@ -1,0 +1,21 @@
+{
+    "name": "Daily World Blog",
+    "short_name": "DailyWorld",
+    "description": "Daily World Blog posts daily on business, tech, games and consulting. Explore trending topics, guides and ideas that inspire more.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3b82f6",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
