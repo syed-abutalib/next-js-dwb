@@ -36,10 +36,8 @@ import toast from "react-hot-toast";
 import { calculateReadTime, formatDate, getExcerpt } from "@/utils/formatters";
 import { fadeInUp, scaleIn, staggerContainer } from "@/utils/animations";
 import { CATEGORY_CONFIG } from "@/utils/constants";
-"use client";
-import React from "react";
 
- const LeftSwiperSkeleton = React.memo(() => (
+const LeftSwiperSkeleton = React.memo(() => (
   <div className="lg:col-span-2">
     <div className="relative h-[600px] md:h-[700px] rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse" />
   </div>
