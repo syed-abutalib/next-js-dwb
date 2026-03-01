@@ -200,6 +200,7 @@ const Header = () => {
             >
               <Link href="/" className="flex items-center gap-2 group">
                 <div className="relative w-68 h-12">
+                <h1>
                   <Image
                     src={logo}
                     alt="Daily World Blog Logo"
@@ -208,6 +209,7 @@ const Header = () => {
                     className="object-contain rounded-lg"
                     priority
                   />
+                  </h1>
                 </div>
               </Link>
             </motion.div>
