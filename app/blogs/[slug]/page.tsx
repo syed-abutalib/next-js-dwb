@@ -140,7 +140,8 @@ export async function generateMetadata({
       openGraph: {
         title: post.title,
         description: post.excerpt || post.description?.substring(0, 160),
-        type: "article",
+        type: "website",
+        url: `https://dailyworldblog.com/blogs/${post.slug}`,
         publishedTime: publishedTime,
         modifiedTime: modifiedTime,
         authors: [authors],
