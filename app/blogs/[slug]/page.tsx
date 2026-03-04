@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { apiUrl } from "@/components/common/Config";
 import Newsletter from "@/components/common/Newsletter";
-export const dynamicParams = true;
+export const revalidate = 60;
 // Types
 interface BlogPost {
   _id: string;
@@ -185,26 +185,26 @@ export async function generateMetadata({
 }
 
 // Generate static paths at build time (for better performance)
-export async function generateStaticParams() {
-  try {
-    const response = await fetch(`${apiUrl}/blogs/published?limit=100000`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      next: { revalidate: 3600 }, // Revalidate every hour
-    });
+// export async function generateStaticParams() {
+//   try {
+//     const response = await fetch(`${apiUrl}/blogs/published?limit=100000`, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       next: { revalidate: 3600 }, // Revalidate every hour
+//     });
 
-    const data = await response.json();
-    const posts = data.data || [];
+//     const data = await response.json();
+//     const posts = data.data || [];
 
-    return posts.map((post: any) => ({
-      slug: post.slug,
-    }));
-  } catch (error) {
-    return [];
-  }
-}
+//     return posts.map((post: any) => ({
+//       slug: post.slug,
+//     }));
+//   } catch (error) {
+//     return [];
+//   }
+// }
 
 // Helper functions
 function getExcerpt(text: string, wordCount = 30): string {
