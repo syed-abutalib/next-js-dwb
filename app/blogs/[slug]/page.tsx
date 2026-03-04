@@ -262,6 +262,9 @@ async function getBlogData(slug: string) {
 
     const post = postData.data;
 
+    if(!post){
+      return notFound();
+    }
     // Fetch categories in parallel
     let categories: Category[] = [];
     let featuredPosts: FeaturedPost[] = [];
