@@ -1,10 +1,11 @@
+export const dynamic = "force-dynamic";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { apiUrl } from "@/components/common/Config";
 import Newsletter from "@/components/common/Newsletter";
-export const revalidate = 60;
+
 // Types
 interface BlogPost {
   _id: string;
