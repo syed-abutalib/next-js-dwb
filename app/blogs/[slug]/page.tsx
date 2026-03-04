@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -79,7 +79,7 @@ export async function generateMetadata({
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 3600 }, // Revalidate every hour
+      next: { revalidate: 60 }, // Revalidate every hour
     });
 
     const data = await response.json();
@@ -249,7 +249,7 @@ async function getBlogData(slug: string) {
         "Content-Type": "application/json",
       },
       next: {
-        revalidate: 3600, // Revalidate every hour
+        revalidate: 60, // Revalidate every 1 min
         tags: [`blog-${slug}`], // For on-demand revalidation
       },
     });
@@ -275,7 +275,7 @@ async function getBlogData(slug: string) {
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 86400 }, // Revalidate daily
+      next: { revalidate: 60 }, // Revalidate daily
     })
       .then((res) => res.json())
       .then((data) => {
@@ -295,7 +295,7 @@ async function getBlogData(slug: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        next: { revalidate: 3600 },
+        next: { revalidate: 60 },
       },
     )
       .then((res) => res.json())
