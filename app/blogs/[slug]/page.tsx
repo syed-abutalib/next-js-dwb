@@ -1,10 +1,12 @@
 export const revalidate = 60;
+export const dynamic = 'force-dynamic'; // Add this to ensure fresh data on each request
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { apiUrl } from "@/components/common/Config";
 import Newsletter from "@/components/common/Newsletter";
+import { unstable_noStore as noStore } from 'next/cache'; // Import for dynamic data
 
 // Types
 interface BlogPost {
@@ -72,14 +74,16 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  noStore();
   try {
     const { slug } = await params;
     const response = await fetch(`${apiUrl}/blogs/slug/${slug}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+         "Cache-Control": "no-cache",
       },
-      next: { revalidate: 60 }, // Revalidate every hour
+      next: { revalidate: 0 }, // Revalidate every hour
     });
 
     const data = await response.json();
@@ -241,30 +245,32 @@ function processHTMLContent(html: string): string {
 
 // Fetch all data on the server
 async function getBlogData(slug: string) {
+ 
+  noStore();
   try {
     // Fetch main post with ISR
     const postResponse = await fetch(`${apiUrl}/blogs/slug/${slug}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
       },
       next: {
-        revalidate: 60, // Revalidate every 1 min
+        revalidate: 0,
         tags: [`blog-${slug}`], // For on-demand revalidation
       },
     });
 
     const postData = await postResponse.json();
-
-    if (!postData.success) {
+    if (!postData.success || !postData.data) {
       return null;
     }
 
+
     const post = postData.data;
 
-    if(!post){
-      return notFound();
-    }
     // Fetch categories in parallel
     let categories: Category[] = [];
     let featuredPosts: FeaturedPost[] = [];
@@ -277,8 +283,10 @@ async function getBlogData(slug: string) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+         "Cache-Control": "no-cache",
+
       },
-      next: { revalidate: 60 }, // Revalidate daily
+      next: { revalidate: 0 }, // Revalidate daily
     })
       .then((res) => res.json())
       .then((data) => {
@@ -297,8 +305,9 @@ async function getBlogData(slug: string) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
         },
-        next: { revalidate: 60 },
+        next: { revalidate: 0 },
       },
     )
       .then((res) => res.json())
@@ -570,6 +579,8 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  noStore();
+  
   const { slug } = await params;
   const data = await getBlogData(slug);
 
