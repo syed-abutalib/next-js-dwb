@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.dailyworldblog.com"),
+  metadataBase: new URL("https://dailyworldblog.com"),
 
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
