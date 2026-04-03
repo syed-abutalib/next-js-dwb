@@ -4,7 +4,7 @@ export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 // Constants (safe for SSR)
 export const SITE_TITLE = "Daily World Blog";
 export const SITE_DESCRIPTION = `Daily World Blog posts daily on business, tech, games and consulting. Explore trending topics, guides and ideas that inspire more.`;
-export const SITE_URL = "https://dailyworldblog.com/";
+export const SITE_URL = "https://dailyworldblog.com";
 
 // For components that need token, use this utility function
 export const getToken = () => {
